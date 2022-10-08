@@ -51,7 +51,7 @@ def get_train_data():
     day = day.replace('-', '')
     day = day.replace(' 00:00:00', '')
     btc_today = get_data(symbol='BTC_JPY', interval='1hour', date=day)
-    eth_today = get_data(symbol='ETH', interval='1hour', date=day)
+    eth_today = get_data(symbol='ETH_JPY', interval='1hour', date=day)
     if len(eth_today) == 0:
         eth_today = pd.DataFrame(data=np.array([[None for i in range(24)] for i in range(5)]).T, index=btc_today.index, columns=['eth_open', 'eth_high', 'eth_low', 'eth_close', 'eth_volume'])
     eth_today.columns = ['eth_open', 'eth_high', 'eth_low', 'eth_close', 'eth_volume']
@@ -63,7 +63,7 @@ def get_train_data():
         day = day.replace('-', '')
         day = day.replace(' 00:00:00', '')
         btc = get_data(symbol='BTC_JPY', interval='1hour', date=day)
-        eth = get_data(symbol='ETH', interval='1hour', date=day)
+        eth = get_data(symbol='ETH_JPY', interval='1hour', date=day)
         if len(eth) == 0:
             eth = pd.DataFrame(data=np.array([[None for i in range(24)] for i in range(5)]).T, index=btc.index, columns=['eth_open', 'eth_high', 'eth_low', 'eth_close', 'eth_volume'])
         eth.columns = ['eth_open', 'eth_high', 'eth_low', 'eth_close', 'eth_volume']
@@ -85,9 +85,9 @@ def data_for_prediction():
     two_days_before = two_days_before.replace(' 00:00:00', '')
     if datetime.now().hour > 6:
         btc_today = get_data(symbol='BTC_JPY', interval='1hour', date=today)
-        eth_today = get_data(symbol='ETH', interval='1hour', date=today)
+        eth_today = get_data(symbol='ETH_JPY', interval='1hour', date=today)
         btc_yesterday = get_data(symbol='BTC_JPY', interval='1hour', date=yesterday)
-        eth_yesterday = get_data(symbol='ETH', interval='1hour', date=yesterday)
+        eth_yesterday = get_data(symbol='ETH_JPY', interval='1hour', date=yesterday)
         btc_data = pd.concat([btc_yesterday, btc_today], axis=0)
         eth_data = pd.concat([eth_yesterday, eth_today], axis=0)
         eth_data.columns = ['eth_open', 'eth_high', 'eth_low', 'eth_close', 'eth_volume']
@@ -95,9 +95,9 @@ def data_for_prediction():
         df = df.tail(20)
     else:
         btc_yesterday = get_data(symbol='BTC_JPY', interval='1hour', date=yesterday)
-        eth_yesterday = get_data(symbol='ETH', interval='1hour', date=yesterday)
+        eth_yesterday = get_data(symbol='ETH_JPY', interval='1hour', date=yesterday)
         btc_day2 = get_data(symbol='BTC_JPY', interval='1hour', date=two_days_before)
-        eth_day2 = get_data(symbol='ETH', interval='1hour', date=two_days_before)
+        eth_day2 = get_data(symbol='ETH_JPY', interval='1hour', date=two_days_before)
         btc_data = pd.concat([btc_day2, btc_yesterday], axis=0)
         eth_data = pd.concat([eth_day2, eth_yesterday], axis=0)
         eth_data.columns = ['eth_open', 'eth_high', 'eth_low', 'eth_close', 'eth_volume']
